@@ -4,7 +4,7 @@ from django.db.models import Avg
 
 
 def home(request):
-    return render(request, "home.html")
+    return render(request, "vuelos/home.html")
 
 
 def registrar_vuelo(request):
@@ -15,27 +15,26 @@ def registrar_vuelo(request):
 
         if nombre and tipo and precio:
             Flight.objects.create(
-                nombre=nombre,
-                tipo=tipo,
-                precio=precio
+                name=nombre,   
+                type=tipo,     
+                price=precio   
             )
             return redirect("listar_vuelos")
-    return render(request, "registrar.html")
+    return render(request, "vuelos/registrar.html")
 
 
 def listar_vuelos(request):
-    vuelos = Flight.objects.all().order_by("precio")
-    return render(request, "listar.html", {"vuelos": vuelos})
+    vuelos = Flight.objects.all().order_by("price")  
+    return render(request, "vuelos/listar.html", {"vuelos": vuelos})
 
 
 def estadisticas(request):
-    total_nacionales = Flight.objects.filter(tipo="Nacional").count()
-    total_internacionales = Flight.objects.filter(tipo="Internacional").count()
-    promedio_nacional = Flight.objects.filter(tipo="Nacional").aggregate(promedio=Avg("precio"))["promedio"]
+    total_nacionales = Flight.objects.filter(type="Nacional").count()
+    total_internacionales = Flight.objects.filter(type="Internacional").count()
+    promedio_nacional = Flight.objects.filter(type="Nacional").aggregate(promedio=Avg("price"))["promedio"]
 
-    return render(request, "estadisticas.html"), {
+    return render(request, "vuelos/estadisticas.html", {
         "total_nacionales": total_nacionales,
         "total_internacionales": total_internacionales,
         "promedio_nacional": promedio_nacional
-
-    }
+    })
