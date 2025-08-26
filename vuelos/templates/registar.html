@@ -1,0 +1,17 @@
+<h2>Registrar Vuelo</h2>
+<form method="POST">
+    {% csrf_token %}
+    <label>Nombre:</label>
+    <input type="text" name="nombre" required><br>
+
+    <label>Tipo:</label>
+    <select name="tipo" required>
+        <option value="Nacional">Nacional</option>
+        <option value="Internacional">Internacional</option>
+    </select><br>
+
+    <label>Precio:</label>
+    <input type="number" name="precio" step="0.01" required><br>
+
+    <button type="submit">Guardar</button>
+</form>
